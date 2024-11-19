@@ -380,6 +380,7 @@ try {
             boolean result = rDao.insert(r);
 
             if (result == true) {
+                limpiar();
                 JOptionPane.showMessageDialog(null, "Reserva registrada exitosamente !!! ", "INFORMATION_MESSAGE", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Registo de reserva Fallido :(", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
@@ -387,9 +388,19 @@ try {
             }
 
         }
-
+        
+        
     }//GEN-LAST:event_btnGenerarReservaActionPerformed
-
+ 
+   public void limpiar() {
+        txt_dni.setText("");
+        labelDni.setText("***DNI***");
+        labelEmail.setText("");
+        labelCliente.setText("***Name***");
+        labelEmail.setText("***EMAIL***");
+        
+    }
+    
     private void btnEnviarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarCorreoActionPerformed
         String numeroTicket = labelDni.getText();
         // capturar la fecha de compra actual y la fecha de retorno

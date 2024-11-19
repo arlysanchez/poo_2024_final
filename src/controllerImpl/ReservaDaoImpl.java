@@ -120,7 +120,7 @@ public class ReservaDaoImpl implements IReservaDao {
             //sentencia de sql para traer todas las reservas
             query = "SELECT r.idReserva, r.fechaIngreso,r.fechaSalida,"
                     + " r.numeroPiso, r.numeroHabitacion, r.costo, r.estado,"
-                    + " c.nombre,u.user FROM reserva r, cliente c, usuario u"
+                    + " c.nombre,c.email,c.dni,c.idcliente,u.user FROM reserva r, cliente c, usuario u"
                     + " where r.clienteId = c.idcliente"
                     + " AND r.usuarioId = u.idusuario "
                     + " AND r.idReserva = ?;";
@@ -140,16 +140,20 @@ public class ReservaDaoImpl implements IReservaDao {
                 re.setCosto(rs.getDouble("costo"));
                 re.setEstado(rs.getString("estado"));
                 cl.setNombre(rs.getString("nombre"));
+                cl.setEmail(rs.getString("email"));
+                cl.setDni(rs.getString("dni"));
+                cl.setIdcliente(rs.getInt("idCliente"));
+
                 re.setCliente(cl);
             }
-            
+
         } catch (Exception e) {
             System.out.println("Error al buscar una reserva" + e.getMessage());
             try {
                 cn.rollback();
             } catch (Exception ex) {
             }
-            
+
             System.out.println("Error, No se pudo buscar la reserva por ID");
         } finally {
             if (cn != null) {
@@ -163,7 +167,7 @@ public class ReservaDaoImpl implements IReservaDao {
 
     @Override
     public boolean delete(Reserva reserva) {
-         boolean flag = false;
+        boolean flag = false;
 
         PreparedStatement st;
         //declaro la variable que va contener la consulta a la base de datos

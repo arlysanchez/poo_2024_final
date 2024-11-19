@@ -85,10 +85,25 @@ public class ListReserva extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tbl_reserva);
 
         btnReload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/img/reload.png"))); // NOI18N
+        btnReload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReloadActionPerformed(evt);
+            }
+        });
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/img/edit.png"))); // NOI18N
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/img/delete.png"))); // NOI18N
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/img/mas.png"))); // NOI18N
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -142,6 +157,45 @@ public class ListReserva extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+  if (tbl_reserva.getRowCount() > 0) { //tabla no vacia
+            if (tbl_reserva.getSelectedRow() != -1) {
+                int idReserva = Integer.parseInt(tbl_reserva.getValueAt(tbl_reserva.getSelectedRow(), 0).toString());
+                int resp = JOptionPane.showConfirmDialog(null, "Esta usted seguro de eliminar el usuario?");
+                if (JOptionPane.OK_OPTION == resp) {
+                    r.setIdReserva(idReserva);
+                    rDAO.delete(r);
+                    JOptionPane.showMessageDialog(null, "usuario eliminado :( ", "INFORMATION_MESSAGE", JOptionPane.INFORMATION_MESSAGE);
+                    cargarReserva();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Operación Cancelada :(", "INFORMATION_MESSAGE", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        }
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
+     cargarReserva();
+    }//GEN-LAST:event_btnReloadActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+
+        if (tbl_reserva.getRowCount() > 0) { //tabla no vacia
+            if (tbl_reserva.getSelectedRow() != -1) {
+                int idreserva = Integer.parseInt(tbl_reserva.getValueAt(tbl_reserva.getSelectedRow(), 0).toString());
+                System.out.println("id_reserva"+idreserva);
+                EditarReserva er = new EditarReserva(idreserva);
+                er.setSize(700, 500);
+                er.setLocation(0, 0);
+                er.setVisible(true);
+                er.setLocationRelativeTo(null);
+            }
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
