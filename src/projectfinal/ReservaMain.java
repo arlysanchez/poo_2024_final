@@ -4,6 +4,7 @@
  */
 package projectfinal;
 
+import Vista.Login;
 import Vista.home;
 
 /**
@@ -16,9 +17,9 @@ public class ReservaMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        home h = new home();
-       h.setVisible(true);
-       h.setLocationRelativeTo(null);
+        Login l = new Login();
+       l.setVisible(true);
+       l.setLocationRelativeTo(null);
     }
     
 }

@@ -380,7 +380,7 @@ try {
             boolean result = rDao.insert(r);
 
             if (result == true) {
-                limpiar();
+                
                 JOptionPane.showMessageDialog(null, "Reserva registrada exitosamente !!! ", "INFORMATION_MESSAGE", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Registo de reserva Fallido :(", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
@@ -428,6 +428,7 @@ try {
 
         boolean result = EmailSender.enviarCorreo(destinatario, asunto, cuerpo);
         if (result) {
+            limpiar();
             JOptionPane.showMessageDialog(null, "Correo enviado Satisfactoriamente", "INFORMATION_MESSAGE", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Error de envio", "INFORMATION_MESSAGE", JOptionPane.INFORMATION_MESSAGE);

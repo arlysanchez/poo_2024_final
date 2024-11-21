@@ -6,6 +6,9 @@ package Vista;
 
 import Vista.Reserva.ListReserva;
 import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
+import model.UserSession;
+import model.Usuario;
 
 /**
  *
@@ -18,6 +21,17 @@ public class home extends javax.swing.JFrame {
      */
     public home() {
         initComponents();
+        cargarUsuario();
+    }
+    
+     private void cargarUsuario() {
+         Usuario usuario = UserSession.getInstance().getUser();
+        if (usuario != null) {
+            // Aquí puedes usar el objeto usuario para personalizar la interfaz, mostrar el nombre, etc.
+            labelSession.setText("Bienvenido," + usuario.getUser());
+        } else {
+            labelSession.setText("Usuario no identificado");
+        }
     }
 
     /**
@@ -38,6 +52,7 @@ public class home extends javax.swing.JFrame {
         btnClientes = new javax.swing.JButton();
         btncloseSesion = new javax.swing.JButton();
         btnUsuarios = new javax.swing.JButton();
+        labelSession = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         Content = new javax.swing.JPanel();
@@ -130,11 +145,16 @@ public class home extends javax.swing.JFrame {
                         .addComponent(btncloseSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(labelSession)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -152,7 +172,9 @@ public class home extends javax.swing.JFrame {
                 .addComponent(btnClientes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnUsuarios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
+                .addComponent(labelSession)
+                .addGap(16, 16, 16)
                 .addComponent(btncloseSesion)
                 .addGap(19, 19, 19))
         );
@@ -237,7 +259,22 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btncloseSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncloseSesionActionPerformed
-        // TODO add your handling code here:
+       int resp = JOptionPane.showConfirmDialog(null, "Esta usted seguro de cerrar tu session ?");
+        if (JOptionPane.OK_OPTION == resp) {
+            UserSession.getInstance().clearSession();
+            // Redirigir a la pantalla de inicio de sesión (por ejemplo, LoginFrame)
+            Login loginFrame = new Login();
+            loginFrame.setVisible(true);
+            loginFrame.setLocationRelativeTo(null);
+
+            // Cerrar la
+            this.dispose();
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Operación Cancelada :(", "INFORMATION_MESSAGE", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+             // TODO add your handling code here:
     }//GEN-LAST:event_btncloseSesionActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
@@ -291,6 +328,7 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel labelSession;
     private javax.swing.JPanel principalPanel;
     // End of variables declaration//GEN-END:variables
 }
